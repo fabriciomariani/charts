@@ -270,6 +270,28 @@ Return the MariaDB User
 {{- end -}}
 
 {{/*
+Get the password key to be retrieved from External Database secret.
+*/}}
+{{- define "wordpress.externalDatabase.secretPasswordKey" -}}
+{{- if and .Values.externalDatabase.existingSecret .Values.externalDatabase.existingSecretPasswordKey -}}
+{{- printf "%s" .Values.externalDatabase.existingSecretPasswordKey -}}
+{{- else -}}
+{{- printf "wordpress.mariadb-password" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Get the password key to be retrieved from WordPress secret.
+*/}}
+{{- define "wordpress.secretPasswordKey" -}}
+{{- if and .Values.existingSecret .Values.existingSecretPasswordKey -}}
+{{- printf "%s" .Values.existingSecretPasswordKey -}}
+{{- else -}}
+{{- printf "wordpress-password" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Check if there are rolling tags in the images
 */}}
 {{- define "wordpress.checkRollingTags" -}}

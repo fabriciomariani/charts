@@ -50,6 +50,18 @@ commonLabels: {}
 ##
 commonAnnotations: {}
 
+## Creates a Secret object containing WordPress credentials
+## Use existing WordPress Secret if set to false
+##
+createSecrets: true
+
+## Use existing secret (does not create the WordPress Secret object)
+# existingSecret:
+## Password key to be retrieved from Wordpress secret
+##
+# existingSecretPasswordKey:
+##
+
 ## User of the application
 ## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
 ##
@@ -451,6 +463,11 @@ externalDatabase:
   ## Database password
   ##
   password: ""
+  ## Use existing secret (ignores previous password)
+  # existingSecret:
+  ## Password key to be retrieved from secret
+  ##
+  # existingSecretPasswordKey:
 
   ## Database name
   ##
