@@ -463,6 +463,7 @@ externalDatabase:
   ## Database password
   ##
   password: ""
+  
   ## Use existing secret (ignores previous password)
   # existingSecret:
   ## Password key to be retrieved from secret
