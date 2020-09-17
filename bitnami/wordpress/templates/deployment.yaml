@@ -79,14 +79,6 @@ spec:
               value: {{ include "wordpress.databaseName" . | quote }}
             - name: WORDPRESS_DATABASE_USER
               value: {{ include "wordpress.databaseUser" . | quote }}
-            {{- if .Values.externalDatabase.existingSecret }}
-            {{- if .Values.externalDatabase.existingSecretPasswordKey }}
-            - name: WORDPRESS_DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "wordpress.externalDatabase.secretName" . }}
-                  key: {{ template "wordpress.externalDatabase.secretPasswordKey" . }}
-            {{- else }}
             - name: WORDPRESS_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -94,18 +86,10 @@ spec:
                   key: mariadb-password
             - name: WORDPRESS_USERNAME
               value: {{ .Values.wordpressUsername | quote }}
-            {{- if .Values.existingSecret }}
-            {{- if .Values.existingSecretPasswordKey }}
             - name: WORDPRESS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "wordpress.secretName" . }}
-                  key: {{ template "wordpress.secretPasswordKey" . }}
-            {{- else }}
-            - name: WORDPRESS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "wordpress.fullname" . }}
+                  name: {{ include "wordpress.secretName" . }}
                   key: wordpress-password
             - name: WORDPRESS_EMAIL
               value: {{ .Values.wordpressEmail | quote }}
@@ -139,11 +123,11 @@ spec:
             - name: SMTP_USER
               value: {{ .Values.smtpUser | quote }}
             {{- end }}
-            {{- if .Values.smtpPassword }}
+            {{- if (or .Values.smtpPassword .Values.smtpExistingSecret) }}
             - name: SMTP_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "wordpress.fullname" . }}
+                  name: {{ include "wordpress.smtpSecretName" . }}
                   key: smtp-password
             {{- end }}
             {{- if .Values.smtpUsername }}
