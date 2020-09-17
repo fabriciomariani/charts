@@ -53,7 +53,7 @@ commonAnnotations: {}
 ## Creates a Secret object containing WordPress credentials
 ## Use existing WordPress Secret if set to false
 ##
-createSecrets: true
+createWordpressSecret: true
 
 ## Use existing secret (does not create the WordPress Secret object)
 # existingSecret:
